@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Unifor - Acesso</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --azul-unifor: #003366;
+            --azul-claro: #e6f2ff;
+            --branco-gema: #fff9e6;
+            --dourado: #d4af37;
+            --azul-escuro: #3a7bd5;
+            --vermelho-erro: #e74c3c;
+            --verde-sucesso: #2ecc71;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Arial', sans-serif;
+            background-color: var(--azul-claro);
+            background-image: linear-gradient(135deg, var(--azul-claro) 0%, #ffffff 100%);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .login-container {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 51, 102, 0.2);
+            padding: 40px;
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+            border-top: 5px solid var(--dourado);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .login-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 51, 102, 0.25);
+        }
+
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--dourado) 0%, var(--azul-unifor) 100%);
+        }
+
+        .logo {
+            margin-bottom: 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 60px;
+            margin-bottom: 15px;
+        }
+
+        .logo-text {
+            color: var(--azul-unifor);
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .login-container h1 {
+            color: var(--azul-unifor);
+            margin-bottom: 30px;
+            font-size: 24px;
+            font-weight: 600;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .login-container h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background-color: var(--dourado);
+            border-radius: 3px;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+            text-align: left;
+            position: relative;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--azul-unifor);
+            font-size: 14px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 15px 12px 40px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 15px;
+            transition: all 0.3s;
+            background-color: #f9f9f9;
+        }
+
+        .input-group input:focus {
+            border-color: var(--dourado);
+            outline: none;
+            background-color: white;
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+        }
+
+        .input-group .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 38px;
+            color: var(--azul-unifor);
+            opacity: 0.7;
+        }
+
+        .password-container {
+            position: relative;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 15px;
+            top: 12px;
+            cursor: pointer;
+            color: #999;
+            transition: color 0.3s;
+        }
+
+        .toggle-password:hover {
+            color: var(--azul-unifor);
+        }
+
+        .btn-login {
+            background-color: var(--azul-unifor);
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            width: 100%;
+            margin: 20px 0 15px;
+            transition: all 0.3s;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-login:hover {
+            background-color: #002244;
+            transform: translateY(-2px);
+        }
+
+        .btn-login:active {
+            transform: translateY(0);
+        }
+
+        .btn-login::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+
+        .btn-login:focus:not(:active)::after {
+            animation: ripple 1s ease-out;
+        }
+
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(20, 20);
+                opacity: 0;
+            }
+        }
+
+        .btn-cadastro {
+            background-color: transparent;
+            color: var(--azul-unifor);
+            border: 2px solid var(--dourado);
+            padding: 12px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .btn-cadastro:hover {
+            background-color: var(--dourado);
+            color: white;
+        }
+
+        .links {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            font-size: 13px;
+        }
+
+        .links a {
+            color: var(--azul-unifor);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+
+        .links a:hover {
+            color: var(--dourado);
+            text-decoration: underline;
+        }
+
+        .footer {
+            margin-top: 30px;
+            font-size: 12px;
+            color: #777;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+        }
+
+        .error-message {
+            color: var(--vermelho-erro);
+            font-size: 13px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .input-group.error input {
+            border-color: var(--vermelho-erro);
+        }
+
+        .input-group.success input {
+            border-color: var(--verde-sucesso);
+        }
+
+        .loading {
+            display: none;
+            margin: 10px 0;
+        }
+
+        .spinner {
+            width: 24px;
+            height: 24px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 30px 20px;
+                margin: 0 15px;
+            }
+            
+            .logo img {
+                height: 50px;
+            }
+            
+            .btn-login, .btn-cadastro {
+                padding: 12px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo">
+            <!-- Substitua pelo logo real da Unifor -->
+            <div class="logo-text">UNIFOR</div>
+        </div>
+        <h1>Acesso ao Portal Acadêmico</h1>
+        
+        <form id="loginForm">
+            <div class="input-group">
+                <label for="email">Login</label>
+                <i class="fas fa-user input-icon"></i>
+                <input type="text" id="email" name="email" placeholder="Digite seu e-mail ou matrícula" required>
+                <div class="error-message" id="email-error">Por favor, insira um e-mail ou matrícula válidos</div>
+            </div>
+            
+            <div class="input-group">
+                <label for="senha">Senha</label>
+                <i class="fas fa-lock input-icon"></i>
+                <div class="password-container">
+                    <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
+                    <i class="fas fa-eye toggle-password" id="togglePassword"></i>
+                </div>
+                <div class="error-message" id="password-error">A senha deve ter pelo menos 6 caracteres</div>
+            </div>
+            
+            <div class="links">
+                <a href="#" id="forgot-password">Esqueci minha senha</a>
+                <a href="#" id="help-link">Precisa de ajuda?</a>
+            </div>
+            
+            <button type="submit" class="btn-login" id="loginButton">
+                <span id="buttonText">Entrar</span>
+                <div class="loading" id="loadingSpinner">
+                    <div class="spinner"></div>
+                </div>
+            </button>
+            
+            <p style="margin: 20px 0 10px; color: #666;">Não tem cadastro?</p>
+            <button type="button" class="btn-cadastro" onclick="window.location.href='cadastro.html'">
+                Criar Conta Acadêmica
+            </button>
+        </form>
+        
+        <div class="footer">
+            © 2023 Universidade de Fortaleza - Unifor<br>
+            Todos os direitos reservados
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mostrar/esconder senha
+            const togglePassword = document.getElementById('togglePassword');
+            const senhaInput = document.getElementById('senha');
+            
+            togglePassword.addEventListener('click', function() {
+                const type = senhaInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                senhaInput.setAttribute('type', type);
+                this.classList.toggle('fa-eye');
+                this.classList.toggle('fa-eye-slash');
+            });
+            
+            // Validação do formulário
+            const loginForm = document.getElementById('loginForm');
+            const emailInput = document.getElementById('email');
+            const emailError = document.getElementById('email-error');
+            const passwordError = document.getElementById('password-error');
+            const loginButton = document.getElementById('loginButton');
+            const buttonText = document.getElementById('buttonText');
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Reset errors
+                emailError.style.display = 'none';
+                passwordError.style.display = 'none';
+                emailInput.parentElement.classList.remove('error');
+                senhaInput.parentElement.classList.remove('error');
+                
+                let isValid = true;
+                
+                // Validação de email/matrícula
+                if (!emailInput.value.trim()) {
+                    emailError.textContent = 'Por favor, insira seu e-mail ou matrícula';
+                    emailError.style.display = 'block';
+                    emailInput.parentElement.classList.add('error');
+                    isValid = false;
+                } else if (!isValidEmailOrMatricula(emailInput.value.trim())) {
+                    emailError.textContent = 'Por favor, insira um e-mail ou matrícula válidos';
+                    emailError.style.display = 'block';
+                    emailInput.parentElement.classList.add('error');
+                    isValid = false;
+                }
+                
+                // Validação de senha
+                if (!senhaInput.value.trim()) {
+                    passwordError.textContent = 'Por favor, insira sua senha';
+                    passwordError.style.display = 'block';
+                    senhaInput.parentElement.classList.add('error');
+                    isValid = false;
+                } else if (senhaInput.value.trim().length < 6) {
+                    passwordError.textContent = 'A senha deve ter pelo menos 6 caracteres';
+                    passwordError.style.display = 'block';
+                    senhaInput.parentElement.classList.add('error');
+                    isValid = false;
+                }
+                
+                if (isValid) {
+                    // Simular envio para o servidor
+                    buttonText.style.display = 'none';
+                    loadingSpinner.style.display = 'block';
+                    loginButton.disabled = true;
+                    
+                    setTimeout(function() {
+                        // Aqui você faria a chamada AJAX real para o servidor
+                        console.log('Dados enviados:', {
+                            email: emailInput.value.trim(),
+                            senha: senhaInput.value.trim()
+                        });
+                        
+                        // Simular resposta do servidor
+                        const success = Math.random() > 0.2; // 80% de chance de sucesso para demonstração
+                        
+                        if (success) {
+                            // Login bem-sucedido - redirecionar
+                            alert('Login bem-sucedido! Redirecionando...');
+                            window.location.href = 'dashboard.html';
+                        } else {
+                            // Mostrar erro de login
+                            emailError.textContent = 'E-mail/matrícula ou senha incorretos';
+                            emailError.style.display = 'block';
+                            passwordError.style.display = 'block';
+                            emailInput.parentElement.classList.add('error');
+                            senhaInput.parentElement.classList.add('error');
+                            
+                            buttonText.style.display = 'inline';
+                            loadingSpinner.style.display = 'none';
+                            loginButton.disabled = false;
+                        }
+                    }, 1500);
+                }
+            });
+            
+            // Função auxiliar para validar email ou matrícula
+            function isValidEmailOrMatricula(value) {
+                // Verifica se é um email válido
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                // Verifica se é uma matrícula (apenas números, pelo menos 6 dígitos)
+                const matriculaRegex = /^\d{6,}$/;
+                
+                return emailRegex.test(value) || matriculaRegex.test(value);
+            }
+            
+            // Link "Esqueci minha senha"
+            document.getElementById('forgot-password').addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('Um link para redefinição de senha será enviado para o e-mail cadastrado.');
+            });
+            
+            // Link "Precisa de ajuda?"
+            document.getElementById('help-link').addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('Entre em contato com o suporte técnico:\n\nCentral de Atendimento: (85) 3477-3000\nE-mail: suporte@unifor.br');
+            });
+        });
+    </script>
+</body>
+</html>
